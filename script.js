@@ -78,6 +78,41 @@ const checkGameOver = () => {
 const endGame = (winner, start, end) => {
     console.log(`${winner} wins!`);
     $("body").innerHTML += `<h2>${winner} wins!</h2>`
+    const cellElements = $$("td");
+    // Draw a line through the winning
+    connect(cellElements[start[0]*3 + start[1]], cellElements[end[0]*3 + end[1]]);
+}
+
+const getOffset = (el) => {
+    let rect = el.getBoundingClientRect();
+    return {
+        left: rect.left + window.pageXOffset,
+        top: rect.top + window.pageYOffset,
+        width: rect.width || el.offsetWidth,
+        height: rect.height || el.offsetHeight
+    };
+}
+
+const connect = (cell1, cell2) => { 
+    let off1 = getOffset(cell1);
+    let off2 = getOffset(cell2);
+    // Bottom right of line
+    let x1 = off1.left + off1.width / 2;
+    let y1 = off1.top + off1.height / 2;
+    // Top right of line
+    let x2 = off2.left + off2.width / 2;
+    let y2 = off2.top + off2.height / 2;
+    // Line length
+    let length = Math.sqrt(((x2-x1) * (x2-x1)) + ((y2-y1) * (y2-y1)));
+    // Center of line
+    let cx = ((x1 + x2) / 2) - (length / 2);
+    let cy = ((y1 + y2) / 2) - (3 / 2);
+    // Calculate angle
+    let angle = Math.atan2((y1-y2),(x1-x2))*(180/Math.PI);
+    // Create line element
+    let lineMarkup = `<div style='padding:0px; margin:0px; height:3px; background-color:white; line-height:1px; position:absolute; left:${cx}px; top:${cy}px; width:${length}px; -moz-transform:rotate(${angle}deg); -webkit-transform:rotate(${angle}deg); -o-transform:rotate(${angle}deg); -ms-transform:rotate(${angle}deg); transform:rotate(${angle}deg);' />`;
+    // Append to document
+    document.body.innerHTML += lineMarkup;
 }
 
 const main = () => {

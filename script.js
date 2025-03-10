@@ -55,12 +55,14 @@ const checkGameOver = () => {
     if (cells[2][0] != " ") {
         if (cells[1][1] == cells[2][0] && cells[0][2] == cells[2][0]){
             endGame(cells[2][0], [2, 0], [0, 2]);
+            return;
         }
     }
 
     cells.forEach((row, y) => {
         if (row.every(cell => cell != " " && cell == row[0])) {
             endGame(row[0], [y, 0], [y, 2]);
+            return;
         }
     })
 
@@ -68,6 +70,7 @@ const checkGameOver = () => {
         if (cells[0][x] != " ") {
             if (cells[1][x] == cells[0][x] && cells[2][x] == cells[0][x]) {
                 endGame(cells[0][x], [0, x], [2, x]);
+                return;
             }
         }
     }
@@ -77,8 +80,6 @@ const checkGameOver = () => {
     })) {
         endGame();
     }
-
-    return false;
 }
 
 const endGame = (winner, start, end) => {

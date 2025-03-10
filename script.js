@@ -7,6 +7,7 @@ let currentTurn = "X";
 // Toggle next character to place
 const changeTurn = () => currentTurn = currentTurn=="X"?"O":"X";
 
+// Create initial empty grid
 const populateCells = () => {
     for (let y = 0; y < 3; y++) {
         cells.push([]);
@@ -18,6 +19,7 @@ const populateCells = () => {
     renderBoard();
 }
 
+// Creates HTML elements and eventListeners for every cell
 const renderBoard = () => {
     const board = $("#board");
     let markup = "";
@@ -32,7 +34,7 @@ const renderBoard = () => {
 
     cellElements = $$("td");
     cellElements.forEach((el, i) => {
-        if (cells[Math.floor(i/3)][i%3] == " ")
+        if (cells[Math.floor(i/3)][i%3] == " ") // Only add evenListener's for empty cells
             el.addEventListener('click', () => {
                 cells[Math.floor(i/3)][i%3] = currentTurn;
                 changeTurn();
@@ -56,8 +58,8 @@ const checkGameOver = () => {
         }
     }
 
-    cells.forEach(row => {
-        if (row.every((cell, y) => cell != " " && cell == row[0])) {
+    cells.forEach((row, y) => {
+        if (row.every(cell => cell != " " && cell == row[0])) {
             endGame(row[0], [y, 0], [y, 2]);
         }
     })
@@ -75,6 +77,7 @@ const checkGameOver = () => {
 
 const endGame = (winner, start, end) => {
     console.log(`${winner} wins!`);
+    $("body").innerHTML += `<h2>${winner} wins!</h2>`
 }
 
 const main = () => {

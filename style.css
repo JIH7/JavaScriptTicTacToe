@@ -29,7 +29,7 @@ td {
     margin: 0;
 
     text-align: center;
-    font-size: 3.2rem;
+    font-size: 3.1rem;
 }
 
 button {
@@ -78,5 +78,5 @@ button {
     left: 50%;
     transform: translate(-50%, -.2rem);
 
-    color:violet;
+    color: violet;
 }

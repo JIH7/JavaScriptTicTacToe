@@ -26,7 +26,7 @@ const renderBoard = () => {
     cells.forEach((row, y) => {
         markup += "<tr>";
         row.forEach((cell, x) => {
-            markup += `<td>${cell}</td>`;
+            markup += `<td class="${cells[y][x]} ${x == 0 ? "left" : ""} ${x== 2 ? "right" : ""} ${y == 0 ? "top" : ""} ${y == 2 ? "bottom" : ""}">${cell}</td>`;
         })
         markup += "</tr>";
     })
@@ -72,15 +72,27 @@ const checkGameOver = () => {
         }
     }
 
+    if (!cells.some(row => {
+         return row.some(cell => cell == " ");
+    })) {
+        endGame();
+    }
+
     return false;
 }
 
 const endGame = (winner, start, end) => {
-    console.log(`${winner} wins!`);
-    $("body").innerHTML += `<h2>${winner} wins!</h2>`
+    if (!winner) {
+        $("body").innerHTML += `<h2>Tied game</h2><span class="tie-c">C</span>`;
+        $("button").addEventListener("click", () => location.reload());
+        return;
+    }
+
+    $("body").innerHTML += `<h2><span class="${winner}">${winner}</span> wins!</h2>`;
     const cellElements = $$("td");
     // Draw a line through the winning
     connect(cellElements[start[0]*3 + start[1]], cellElements[end[0]*3 + end[1]]);
+    $("button").addEventListener("click", () => location.reload());
 }
 
 const getOffset = (el) => {
@@ -117,6 +129,7 @@ const connect = (cell1, cell2) => {
 
 const main = () => {
     populateCells();
+    $("button").addEventListener("click", () => location.reload());
 }
 
 addEventListener("DOMContentLoaded", main);

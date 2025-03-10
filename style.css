@@ -18,16 +18,65 @@ h1, h2 {
 }
 
 table {
-    border-spacing: 0px;
+    border-collapse: collapse;
 }
 
 td {
-    width: 3rem;
-    height: 3rem;
+    width: 4rem;
+    height: 4rem;
     border: 1px solid white;
     
     margin: 0;
 
     text-align: center;
-    font-size:xx-large;
+    font-size: 3.2rem;
+}
+
+button {
+    display: block;
+    border: none;
+    background-color: #FFFFFF12;
+    color: white;
+    padding: .6rem .8rem;
+
+    transition: background-color 200ms ease-out;
+
+    &:hover {
+        background-color: #FFFFFF24;
+    }
+}
+
+.top {
+    border-top: none;
+}
+
+.left {
+    border-left: none;
+}
+
+.bottom {
+    border-bottom: none;
+}
+
+.right {
+    border-right: none;
+}
+
+.X {
+    color: tomato;
+}
+
+.O {
+    color: turquoise;
+}
+
+.tie-c {
+    position: absolute;
+    font-size: 16rem;
+
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -.2rem);
+
+    color:violet;
 }
